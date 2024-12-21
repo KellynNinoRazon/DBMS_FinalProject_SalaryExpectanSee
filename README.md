@@ -13,22 +13,30 @@ The **Salary Expectansee** project integrates with a MySQL database to ensure pe
 ### 2. **Tables**
 
 #### `employees`
-| Column Name   | Data Type       | Constraints                        |
-|---------------|-----------------|------------------------------------|
-| `id`          | INT             | Primary Key, Auto Increment        |
-| `username`    | VARCHAR(50)     | Unique, Not Null                   |
-| `password`    | VARCHAR(50)     | Not Null                           |
-| `hourly_rate` | DECIMAL(10, 2)  | Default: 0.00                      |
-| `total_hours` | DECIMAL(10, 2)  | Default: 0.00                      |
+Here’s the schema presented in the format you want:
 
-#### `work_logs`
-| Column Name     | Data Type       | Constraints                        |
-|-----------------|-----------------|------------------------------------|
-| `log_id`        | INT             | Primary Key, Auto Increment        |
-| `employee_id`   | INT             | Foreign Key (References `employees.id`) |
-| `work_date`     | DATE            | Not Null                           |
-| `hours_worked`  | DECIMAL(10, 2)  | Not Null                           |
+### `admins`
+| Column Name  | Data Type    | Constraints               |
+|--------------|--------------|---------------------------|
+| `username`   | VARCHAR(50)  | Primary Key               |
+| `password`   | VARCHAR(50)  | Not Null                  |
+---
 
+### `employees`
+| Column Name   | Data Type    | Constraints               |
+|---------------|--------------|---------------------------|
+| `username`    | VARCHAR(50)  | Primary Key               |
+| `password`    | VARCHAR(50)  | Not Null                  |
+| `hourly_rate` | DOUBLE       | Not Null                  |
+---
+
+### `work_hours`
+| Column Name    | Data Type    | Constraints                                             |
+|----------------|--------------|---------------------------------------------------------|
+| `id`           | INT          | Primary Key, Auto Increment                             |
+| `username`     | VARCHAR(50)  | Not Null, Foreign Key (References `employees.username`) |
+| `date`         | DATE         | Not Null                                                |
+| `hours_worked` | DOUBLE       | Not Null                                                |
 ---
 
 ## Database Connection
@@ -39,8 +47,8 @@ The **Salary Expectansee** project integrates with a MySQL database to ensure pe
 
 ### Configuration
 - Database URL: `jdbc:mysql://localhost:3306/salary_expectansee`
-- MySQL Username: `root`
-- MySQL Password: `your_password`
+- MySQL Username: `sqluser`
+- MySQL Password: `password`
 
 ### JDBC Setup
 Use the `DBConnection` class to manage database connections:
@@ -51,20 +59,16 @@ import java.sql.SQLException;
 
 public class DBConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/salary_expectansee";
-    private static final String USER = "root";
-    private static final String PASSWORD = "your_password";
+    private static final String USER = "sqluser";
+    private static final String PASSWORD = "password";
 
-    public static Connection getConnection() {
-        try {
-            return DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error connecting to the database");
-        }
+    public static Connection getConnection() throws SQLException {
+        
+        return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 }
-```
 
+```
 ---
 
 ## Key Features
@@ -90,35 +94,29 @@ public class DBConnection {
 
 ### Create Database and Tables
 ```sql
-CREATE DATABASE salary_expectansee;
+Table admins {
+  username varchar(50) [pk]
+  password varchar(50) [not null]
+}
 
-USE salary_expectansee;
+Table employees {
+  username varchar(50) [pk]
+  password varchar(50) [not null]
+  hourly_rate double [not null]
+}
 
-CREATE TABLE employees (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(50) NOT NULL,
-    hourly_rate DECIMAL(10, 2) DEFAULT 0.00,
-    total_hours DECIMAL(10, 2) DEFAULT 0.00
-);
-
-CREATE TABLE work_logs (
-    log_id INT AUTO_INCREMENT PRIMARY KEY,
-    employee_id INT,
-    work_date DATE,
-    hours_worked DECIMAL(10, 2),
-    FOREIGN KEY (employee_id) REFERENCES employees(id)
-);
+Table work_hours {
+  id int [pk, increment]
+  username varchar(50) [not null, ref: > employees.username]
+  date date [not null]
+  hours_worked double [not null]
+}
 ```
 
 ### Insert Sample Data
 ```sql
-INSERT INTO employees (username, password, hourly_rate) VALUES ('employee1', 'emp123', 15.00);
-INSERT INTO employees (username, password, hourly_rate) VALUES ('employee2', 'emp456', 20.00);
-
-INSERT INTO work_logs (employee_id, work_date, hours_worked) VALUES (1, '2024-12-01', 8.0);
-INSERT INTO work_logs (employee_id, work_date, hours_worked) VALUES (1, '2024-12-02', 6.5);
-INSERT INTO work_logs (employee_id, work_date, hours_worked) VALUES (2, '2024-12-01', 7.0);
+INSERT INTO admins (username, password) VALUES ('admin', 'adminpass');
+INSERT INTO employees (username, password, hourly_rate) VALUES ('employee1', 'emp123', 15.0);
 ```
 
 ---
