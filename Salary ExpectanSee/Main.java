@@ -1,9 +1,12 @@
 import java.util.Scanner;
 
-public class Main {
-    public static void main(String[] args) {
+public class Main 
+{
+    public static void main(String[] args) 
+    {
         Scanner scanner = new Scanner(System.in);
-        while (true) {
+        while (true) 
+        {
             System.out.print("Enter your role (Admin/Employee): ");
             String role = scanner.nextLine();
 
@@ -13,21 +16,32 @@ public class Main {
             System.out.print("Enter your password: ");
             String password = scanner.nextLine();
 
-            if (role.equalsIgnoreCase("Admin") && UserManager.authenticateAdmin(username, password)) {
+            if (role.equalsIgnoreCase("Admin") && UserManager.authenticateAdmin(username, password)) 
+            {
                 boolean loggedOut = AdminMenu.displayAdminMenu();
-                if (loggedOut) {
-                    continue; // Go back to the initial menu
-                } else {
-                    break; // Exit the program
+                if (loggedOut) 
+                {
+                    continue;
+                } 
+                else 
+                {
+                    break;
                 }
-            } else if (role.equalsIgnoreCase("Employee") && UserManager.authenticateEmployee(username, password)) {
+            } 
+            else if (role.equalsIgnoreCase("Employee") && UserManager.authenticateEmployee(username, password)) 
+            {
                 boolean loggedOut = EmployeeMenu.displayEmployeeMenu(username);
-                if (loggedOut) {
-                    continue; // Go back to the initial menu
-                } else {
-                    break; // Exit the program
+                if (loggedOut) 
+                {
+                    continue; 
+                } 
+                else 
+                {
+                    break;
                 }
-            } else {
+            } 
+            else 
+            {
                 System.out.println("Invalid credentials. Please try again.");
             }
         }

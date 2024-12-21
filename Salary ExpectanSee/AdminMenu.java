@@ -2,11 +2,14 @@ import java.sql.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class AdminMenu {
+public class AdminMenu 
+{
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static boolean displayAdminMenu() {
-        while (true) {
+    public static boolean displayAdminMenu() 
+    {
+        while (true) 
+        {
             System.out.println("\nAdmin Menu:");
             System.out.println("1. View All Employees' Total Salary and Hourly Rate");
             System.out.println("2. Search for a Specific Employee's Record");
@@ -17,30 +20,32 @@ public class AdminMenu {
             System.out.print("Enter your choice: ");
             
             int choice = -1;
-            try {
+            try 
+            {
                 choice = scanner.nextInt();
-            } catch (InputMismatchException e) {
+            } catch (InputMismatchException e) 
+            {
                 System.out.println("Invalid input. Please enter a number between 1 and 6.");
-                scanner.next(); // Clear the invalid input
+                scanner.next();
                 continue;
             }
 
-            switch (choice) {
+            switch (choice) 
+            {
                 case 1 -> viewAllEmployees();
                 case 2 -> searchEmployeeRecord();
                 case 3 -> changeHourlyRate();
                 case 4 -> addNewEmployee();
                 case 5 -> eraseEmployee();
-                case 6 -> {
+                case 6 -> 
+                {
                     System.out.println("Logging out...");
-                    return true; // Indicate that the user wants to log out
+                    return true;
                 }
                 default -> System.out.println("Invalid choice. Please enter a number between 1 and 6.");
             }
         }
     }
-
-    // ...existing code...
 
     private static void viewAllEmployees() 
     {

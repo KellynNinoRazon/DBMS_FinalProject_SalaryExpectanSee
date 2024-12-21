@@ -1,7 +1,7 @@
 # Salary Expectansee - Database Integration
 
 ## Overview
-The **Salary Expectansee** project integrates with a MySQL database to ensure persistent and efficient management of employee data. The database stores crucial information such as user credentials, hourly rates, work logs, and total salaries. This allows for transparency, accountability, and scalability in managing employee records.
+The **Salary Expectansee** project integrates with a MySQL database to ensure persistent and efficient management of employee data. The database stores crucial information such as user credentials, hourly rates, work logs, and total salaries. This allows for transparency, accountability, and scalability in tracking employees' working records.
 
 ---
 
@@ -11,9 +11,6 @@ The **Salary Expectansee** project integrates with a MySQL database to ensure pe
 `salary_expectansee`
 
 ### 2. **Tables**
-
-#### `employees`
-Here’s the schema presented in the format you want:
 
 ### `admins`
 | Column Name  | Data Type    | Constraints               |
@@ -148,5 +145,5 @@ INSERT INTO employees (username, password, hourly_rate) VALUES ('employee1', 'em
 
 ---
 
-Integrating a database ensures data persistence and scalability for **Salary Expectansee**, providing a robust foundation for future growth and additional features.
+**Salary Expectansee**, providing transparency and motivating your employee!
 
