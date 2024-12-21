@@ -8,7 +8,7 @@ The **Salary Expectansee** project integrates with a MySQL database to ensure pe
 ## Database Schema
 
 ### 1. **Database Name**
-`salary_expectansee`
+`Salary_Expectansee`
 
 ### 2. **Tables**
 
