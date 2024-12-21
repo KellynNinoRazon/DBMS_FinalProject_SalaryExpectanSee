@@ -1,34 +1,44 @@
 import java.sql.*;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class EmployeeMenu {
-    public static void displayEmployeeMenu(String username) {
-        Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static boolean displayEmployeeMenu(String username) {
         while (true) {
             System.out.println("\nEmployee Menu:");
             System.out.println("1. Log Hours Worked");
             System.out.println("2. View Worked Hours and Salary");
             System.out.println("3. Clear Entries");
-            System.out.println("4. Exit");
+            System.out.println("4. Log Out");
             System.out.print("Enter your choice: ");
-            int choice = scanner.nextInt();
+            
+            int choice = -1;
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number between 1 and 4.");
+                scanner.next(); // Clear the invalid input
+                continue;
+            }
 
             switch (choice) {
                 case 1 -> logHours(username);
                 case 2 -> viewHoursAndSalary(username);
                 case 3 -> clearEntries(username);
                 case 4 -> {
-                    return;
+                    System.out.println("Logging out...");
+                    return true; // Indicate that the user wants to log out
                 }
-                default -> System.out.println("Invalid choice. Please try again.");
+                default -> System.out.println("Invalid choice. Please enter a number between 1 and 4.");
             }
         }
     }
 
     private static void logHours(String username) {
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Enter date (YYYY-MM-DD): ");
-        String date = scanner.nextLine();
+        String date = scanner.next();  // Read input using the same scanner instance
         System.out.print("Enter hours worked: ");
         double hours = scanner.nextDouble();
 
